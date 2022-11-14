@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.Views.Interfaces;
 
-namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details
+namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.Views.Details
 {
     /// <summary>
     /// Interaction logic for SystemDetailsView.xaml

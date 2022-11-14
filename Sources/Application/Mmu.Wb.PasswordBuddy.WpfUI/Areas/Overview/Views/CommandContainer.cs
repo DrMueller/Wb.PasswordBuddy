@@ -5,7 +5,7 @@ using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.Commands;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.Components.CommandBars.ViewData;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.ViewModelCommands;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Services;
-using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details;
+using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.Views.Details;
 using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Overview.ViewData;
 using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Overview.ViewServices;
 
@@ -26,7 +26,7 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Overview.Views
                 return new ParametredAsyncRelayCommand(async obj =>
                                                        {
                                                            var data = (SystemOverviewEntryViewData)obj;
-                                                           await _displayService.DisplayAsync<SystemDetailsViewModel>(data);
+                                                           await _displayService.DisplayAsync<SystemDetailsViewModel>(data.SystemId);
                                                        });
             }
         }

@@ -10,7 +10,7 @@
   <DataGrid
    x:Name="Dg"
    attachedProperties:DoubleClickBinding.DoubleClickCommand="{Binding EditSystem, Mode=OneWay}"
-   attachedProperties:DoubleClickBinding.DoubleClickParameter="{Binding .}"
+   attachedProperties:DoubleClickBinding.DoubleClickParameter="{Binding ElementName=Dg, Path=SelectedItem, Mode=OneWay}"
    ItemsSource="{Binding OverviewEntries, Mode=OneWay}"
    AutoGenerateColumns="False"
    CanUserAddRows="False"
@@ -26,7 +26,7 @@
      Width="*" />
     <DataGridTextColumn
      Binding="{Binding SystemName, Mode=OneWay}"
-     Header="Name"
+     Header="SystemName"
      IsReadOnly="true"
      Width="*" />
    </DataGrid.Columns>

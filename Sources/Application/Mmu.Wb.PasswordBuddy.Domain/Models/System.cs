@@ -5,22 +5,22 @@ namespace Mmu.Wb.PasswordBuddy.Domain.Models
 {
     public class System : AggregateRoot
     {
-        private readonly CredentialChanges _credentialChanges;
+        public CredentialChanges CredentialChanges { get; }
         public string AdditionalData { get; }
         public string Name { get; }
 
         public System(
-            string id,
             string name,
             CredentialChanges credentialChanges,
-            string additionalData)
+            string additionalData,
+            string? id = null)
         {
             Guard.StringNotNullOrEmpty(() => name);
             Guard.ObjectNotNull(() => credentialChanges);
-            Id = id;
+            Id = id ?? Guid.NewGuid().ToString();
             Name = name;
             AdditionalData = additionalData;
-            _credentialChanges = credentialChanges;
+            CredentialChanges = credentialChanges;
         }
     }
 }

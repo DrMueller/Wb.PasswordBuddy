@@ -10,9 +10,9 @@ namespace Mmu.Wb.PasswordBuddy.Domain.Models
     {
         public IList<CredentialChange> Changes { get; }
 
-        public CredentialChanges(IList<CredentialChange> changes)
+        public CredentialChanges(IList<CredentialChange>? changes = null)
         {
-            Changes = changes;
+            Changes = changes ?? new List<CredentialChange>();
         }
 
     }
