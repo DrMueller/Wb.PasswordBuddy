@@ -1,36 +1,16 @@
-﻿using Mmu.Wb.PasswordBuddy.Domain.Data.Repositories;
+﻿using Mmu.Mlh.DataAccess.Areas.DataModeling.Services;
+using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services;
+using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels;
+using Mmu.Wb.PasswordBuddy.DataAccess.Repositories.Base;
+using Mmu.Wb.PasswordBuddy.Domain.Data.Repositories;
 using Mmu.Wb.PasswordBuddy.Domain.Models;
 
 namespace Mmu.Wb.PasswordBuddy.DataAccess.Repositories
 {
-    public class SystemRepository : ISystemRepository
+    public class SystemRepository : RepositoryBase<Domain.Models.System, SystemDataModel>, ISystemRepository
     {
-        public Task<IReadOnlyCollection<Domain.Models.System>> LoadAllAsync()
+        public SystemRepository(IDataModelRepository<SystemDataModel> dataModelRepository, IDataModelAdapter<SystemDataModel, Domain.Models.System> dataModelAdapter) : base(dataModelRepository, dataModelAdapter)
         {
-            var list = new List<Domain.Models.System>
-            {
-                new(
-                    "Name123",
-                    new CredentialChanges(
-                        new List<CredentialChange>()),
-                    "Tra")
-            };
-
-            return Task.FromResult<IReadOnlyCollection<Domain.Models.System>>(list);
-        }
-
-        public Task<Domain.Models.System> LoadAsync(string id)
-        {
-            return Task.FromResult(new Domain.Models.System(
-                "Name123 " + id,
-                new CredentialChanges(
-                    new List<CredentialChange>()),
-                "Tra", id));
-        }
-
-        public Task SaveAsync(Domain.Models.System system)
-        {
-            return Task.CompletedTask;
         }
     }
 }

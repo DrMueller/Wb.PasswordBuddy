@@ -10,14 +10,14 @@ namespace Mmu.Wb.PasswordBuddy.Domain.Models
         public string Name { get; }
 
         public System(
+            string? id,
             string name,
             CredentialChanges credentialChanges,
-            string additionalData,
-            string? id = null)
+            string additionalData )
         {
             Guard.StringNotNullOrEmpty(() => name);
             Guard.ObjectNotNull(() => credentialChanges);
-            Id = id ?? Guid.NewGuid().ToString();
+            Id = id;
             Name = name;
             AdditionalData = additionalData;
             CredentialChanges = credentialChanges;
