@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
-using Mmu.Mlh.DataAccess.Areas.DataModeling.Models;
 using Mmu.Mlh.LanguageExtensions.Areas.Types.Maybes;
+using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels.Base;
 
 namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services
 {

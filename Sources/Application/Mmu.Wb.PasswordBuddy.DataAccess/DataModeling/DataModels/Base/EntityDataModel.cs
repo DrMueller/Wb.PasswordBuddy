@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace Mmu.Mlh.DataAccess.Areas.DataModeling.Models
+namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels.Base
 {
     [PublicAPI]
     public abstract class EntityDataModel

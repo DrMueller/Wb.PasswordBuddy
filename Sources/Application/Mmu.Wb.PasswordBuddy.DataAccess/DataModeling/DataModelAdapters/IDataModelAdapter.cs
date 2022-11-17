@@ -1,7 +1,7 @@
-﻿using Mmu.Mlh.DataAccess.Areas.DataModeling.Models;
+﻿using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels.Base;
 using Mmu.Wb.PasswordBuddy.Domain.Models.Base;
 
-namespace Mmu.Mlh.DataAccess.Areas.DataModeling.Services
+namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelAdapters
 {
     public interface IDataModelAdapter<TDataModel, TAggregateRoot>
         where TDataModel : AggregateRootDataModel

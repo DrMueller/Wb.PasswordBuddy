@@ -1,9 +1,9 @@
-using Mmu.Mlh.DataAccess.Areas.DataModeling.Models;
+using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels.Base;
 using Newtonsoft.Json;
 
 namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services.Servants.Implementation
 {
-    internal class DataModelFileAdapter<T> : IDataModelFileAdapter<T>
+    public class DataModelFileAdapter<T> : IDataModelFileAdapter<T>
         where T : AggregateRootDataModel
     {
         public T AdaptToDataModel(Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Models.File dataModelFile)

@@ -1,4 +1,4 @@
-using Mmu.Mlh.DataAccess.Areas.DataModeling.Models;
+using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels.Base;
 
 namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services.Servants
 {

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Mmu.Mlh.LanguageExtensions.Areas.Types.Maybes;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Services;
 using Mmu.Wb.PasswordBuddy.Domain.Data.Repositories;
 using Mmu.Wb.PasswordBuddy.Domain.Models;
@@ -27,7 +28,9 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.ViewServices.Implementation
                 return vm;
             }
 
-            var system = await _systemRepo.LoadAsync(id);
+            var systemMaybe = await _systemRepo.LoadAsync(id);
+            var system = systemMaybe.Reduce(() => throw new System.Exception($"Could not find System with ID {id}"));
+            
             vm.SystemId = system.Id;
             vm.SystemName = system.Name;
 
@@ -38,10 +41,10 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.ViewServices.Implementation
         {
             var credChanges = await GetOrCreateChanges(data.SystemId);
             var system = new Domain.Models.System(
+                data.SystemId,
                 data.SystemName,
                 credChanges,
-                data.AdditionalData,
-                data.SystemId
+                data.AdditionalData
             );
 
             await _systemRepo.SaveAsync(system);
@@ -54,8 +57,10 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.ViewServices.Implementation
                 return new CredentialChanges();
             }
 
-            var existingSystem = await _systemRepo.LoadAsync(systemId);
-            return existingSystem.CredentialChanges;
+            var existingSystemMaybe = await _systemRepo.LoadAsync(systemId);
+            var system = existingSystemMaybe.Reduce(() => throw new System.Exception($"Could not find System with ID {systemId}"));
+
+            return system.CredentialChanges;
         }
     }
 }

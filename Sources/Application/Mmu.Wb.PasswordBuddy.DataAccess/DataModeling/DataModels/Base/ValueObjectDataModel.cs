@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 
-namespace Mmu.Mlh.DataAccess.Areas.DataModeling.Models
+namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels.Base
 {
     public abstract class ValueObjectDataModel<T> : IEquatable<T>
         where T : ValueObjectDataModel<T>

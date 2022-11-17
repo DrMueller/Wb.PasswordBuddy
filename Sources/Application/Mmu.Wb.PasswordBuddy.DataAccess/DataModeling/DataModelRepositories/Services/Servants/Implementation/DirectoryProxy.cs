@@ -3,7 +3,7 @@ using System.IO.Abstractions;
 
 namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services.Servants.Implementation
 {
-    internal class DirectoryProxy<T> : IDirectoryProxy<T>
+    public class DirectoryProxy<T> : IDirectoryProxy<T>
     {
         private readonly IFileSystem _fileSystem;
 

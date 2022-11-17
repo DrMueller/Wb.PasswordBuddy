@@ -1,9 +1,9 @@
 using System.IO.Abstractions;
-using Mmu.Mlh.DataAccess.Areas.DataModeling.Models;
+using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels.Base;
 
 namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services.Servants.Implementation
 {
-    internal class FileSystemProxy<T> : IFileSystemProxy<T>
+    public class FileSystemProxy<T> : IFileSystemProxy<T>
         where T : AggregateRootDataModel
     {
         private const string FileExtension = ".json";

@@ -1,8 +1,8 @@
 using System.Linq.Expressions;
 using System.Reflection.Metadata.Ecma335;
-using Mmu.Mlh.DataAccess.Areas.DataModeling.Models;
 using Mmu.Mlh.LanguageExtensions.Areas.Types.Maybes;
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services.Servants;
+using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels.Base;
 
 namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services.Implementation
 {
@@ -12,7 +12,7 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Ser
         private readonly IDataModelFileAdapter<T> _dataModelFileAdapter;
         private readonly IFileSystemProxy<T> _fileProxy;
 
-        protected DataModelRepository(
+        public DataModelRepository(
             IFileSystemProxy<T> fileSystemProxy,
             IDataModelFileAdapter<T> dataModelFileAdapter)
         {
@@ -35,7 +35,7 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Ser
         public async Task<Maybe<T>> LoadAsync(string id)
         {
             var items = await LoadAsync(f => f.Id == id);
-            return Maybe.CreateFromNullable<T>(items.SingleOrDefault());
+            return items.SingleOrDefault();
         }
 
         private Task<IReadOnlyCollection<T>> LoadAsync(Expression<Func<T, bool>> predicate)
