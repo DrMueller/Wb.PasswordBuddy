@@ -9,7 +9,7 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels
 {
     public class SystemDataModel : AggregateRootDataModel
     {
-        public CredentialChangesDataModel CredentialChanges { get; set; }
+        public CredentialsDataModel Credentials { get; set; }
 
         public string Name { get; set; }
 

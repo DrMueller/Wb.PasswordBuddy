@@ -6,6 +6,7 @@ using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.Commands;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.Components.CommandBars.ViewData;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.ViewModelCommands;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Services;
+using Mmu.Wb.PasswordBuddy.WpfUI.Areas.CredentialsOverview.Views.CredentialsOverview;
 using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.Views.SystemData;
 using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.ViewServices;
 using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Overview.Views;
@@ -45,15 +46,34 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.Views.Details
                 "Cancel",
                 new AsyncRelayCommand(async () => await NavigateToOverviewAsync()));
 
+        private ViewModelCommand Credentials =>
+            new(
+                "Credentials",
+                new AsyncRelayCommand(async () => await NavigateToCredentials()));
+
         private async Task NavigateToOverviewAsync()
         {
             await _vmDisplayService.DisplayAsync<SystemOverviewViewModel>();
         }
 
+        private async Task NavigateToCredentials()
+        {
+            if (_context.SystemData.Data.SystemId == null)
+            {
+                _informationPublisher.Publish(
+                    InformationEntry.CreateError("System must be saved before adding credentials."));
+                return;
+            }
+
+            await _vmDisplayService.DisplayAsync<CredentialsOverviewViewModel>(_context.SystemData.Data.SystemId);
+        }
+        
+
         public Task InitializeAsync(SystemDetailsViewModel context)
         {
             _context = context;
             Commands = new CommandsViewData(
+                Credentials,
                 Save,
                 Cancel);
 

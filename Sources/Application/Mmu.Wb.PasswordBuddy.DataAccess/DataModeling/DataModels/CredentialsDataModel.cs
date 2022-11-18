@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mmu.Wb.PasswordBuddy.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels
 {
-    public class CredentialChangesDataModel
+    public class CredentialsDataModel
     {
-        public List<CredentialChangeDataModel> Values { get; set; }
+        public List<CredentialDataModel> Values;
     }
 }

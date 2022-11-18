@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mmu.Mlh.LanguageExtensions.Areas.Types.Maybes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,27 @@ namespace Mmu.Wb.PasswordBuddy.Domain.Models
 {
     public class CredentialChanges
     {
-        public IList<CredentialChange> Changes { get; }
+        public IList<CredentialChange> Values { get; }
 
-        public CredentialChanges(IList<CredentialChange>? changes = null)
+        public bool HasChanges
         {
-            Changes = changes ?? new List<CredentialChange>();
+            get
+            {
+                return Values.Any();
+            }
+        }
+
+        public CredentialChange Latest
+        {
+            get
+            {
+                return Values.OrderByDescending(f => f.Changed).First();
+            }
+        }
+
+    public CredentialChanges(IList<CredentialChange>? changes = null)
+        {
+            Values = changes ?? new List<CredentialChange>();
         }
 
     }

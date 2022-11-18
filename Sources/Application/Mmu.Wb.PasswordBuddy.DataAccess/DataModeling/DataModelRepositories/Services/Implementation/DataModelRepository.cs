@@ -32,10 +32,10 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Ser
             return await LoadAsync(f => true);
         }
 
-        public async Task<Maybe<T>> LoadAsync(string id)
+        public async Task<T> LoadAsync(string id)
         {
             var items = await LoadAsync(f => f.Id == id);
-            return items.SingleOrDefault();
+            return items.Single();
         }
 
         private Task<IReadOnlyCollection<T>> LoadAsync(Expression<Func<T, bool>> predicate)

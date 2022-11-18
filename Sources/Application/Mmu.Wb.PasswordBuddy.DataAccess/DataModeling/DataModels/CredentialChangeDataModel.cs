@@ -9,6 +9,7 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels
     public class CredentialChangeDataModel
     {
         public string Password { get; set; }
-        public string UserName { get; set;  }
+        public string UserName { get; set; }
+        public DateTime Changed { get; set; }
     }
 }

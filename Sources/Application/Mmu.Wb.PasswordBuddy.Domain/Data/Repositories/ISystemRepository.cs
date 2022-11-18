@@ -11,8 +11,10 @@ namespace Mmu.Wb.PasswordBuddy.Domain.Data.Repositories
     {
         Task<IReadOnlyCollection<Models.System>> LoadAllAsync();
 
-        Task<Maybe<Models.System>> LoadAsync(string id);
+        Task<Models.System> LoadAsync(string id);
 
         Task SaveAsync(Models.System system);
+
+        Task DeleteAsync(string systemId);
     }
 }

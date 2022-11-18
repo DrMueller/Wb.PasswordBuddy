@@ -1,5 +1,7 @@
-﻿using Mmu.Mlh.LanguageExtensions.Areas.Tasks;
+﻿using Mmu.Mlh.LanguageExtensions.Areas.Functional;
+using Mmu.Mlh.LanguageExtensions.Areas.Tasks;
 using Mmu.Mlh.LanguageExtensions.Areas.Types.Maybes;
+using Mmu.Wb.PasswordBuddy.CrossCutting.LanguageExtensions.Collections;
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelAdapters;
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services;
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels.Base;
@@ -34,9 +36,10 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.Repositories.Base
                     .SelectAsync(md => _dataModelAdapter.Adapt(md));
         }
 
-        public async Task<Maybe<TAggregateRoot>> LoadAsync(string id)
+        public async Task<TAggregateRoot> LoadAsync(string id)
         {
-            var dmMaybe = await _dataModelRepository.LoadAsync(id);
+            var dmMaybe = await 
+                _dataModelRepository.LoadAsync(id).Select2Async(f => f);
             return dmMaybe.Map(dm => _dataModelAdapter.Adapt(dm));
         }
 

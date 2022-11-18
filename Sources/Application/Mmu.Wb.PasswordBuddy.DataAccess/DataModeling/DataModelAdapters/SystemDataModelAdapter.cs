@@ -8,13 +8,37 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelAdapters
     {
         public override Domain.Models.System Adapt(SystemDataModel dataModel)
         {
-            var credChanges = dataModel.CredentialChanges.Changes
-                .Select(f => new CredentialChange(f.Password, f.UserName)).ToList();
             return new Domain.Models.System(
                 dataModel.Id,
                 dataModel.Name,
-                new CredentialChanges(credChanges),
+                AdaptCredentials(dataModel.Credentials),
                 dataModel.AdditionalData);
+        }
+
+        private Credentials AdaptCredentials(CredentialsDataModel creds)
+        {
+            var cred = creds.Values.Select(AdaptCredential).ToList();
+            return new Credentials(cred);
+
+        }
+
+        private Credential AdaptCredential(CredentialDataModel cred)
+        {
+            return new Credential(
+                cred.Name,
+                AdaptCredentialChanges(cred.Changes));
+        }
+
+        private CredentialChanges AdaptCredentialChanges(CredentialChangesDataModel credChanges)
+        {
+            return new CredentialChanges(credChanges.Values.Select(AdaptCredentialChange).ToList());
+        }
+
+        private CredentialChange AdaptCredentialChange(CredentialChangeDataModel credChange)
+        {
+            return new CredentialChange(credChange.UserName,
+                credChange.Password,
+                credChange.Changed);
         }
 
         public override SystemDataModel Adapt(Domain.Models.System aggregateRoot)
@@ -22,11 +46,19 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelAdapters
             return new SystemDataModel
             {
                 AdditionalData = aggregateRoot.AdditionalData,
-                CredentialChanges = new CredentialChangesDataModel
+                Credentials = new CredentialsDataModel
                 {
-                    Changes = aggregateRoot.CredentialChanges.Changes.Select(f => new CredentialChangeDataModel
+                    Values = aggregateRoot.Credentials.Values.Select(f => new CredentialDataModel
                     {
-                        Password = f.Password, UserName = f.UserName
+                        Changes = new CredentialChangesDataModel
+                        {
+                            Values = f.Changes.Values.Select(c => new CredentialChangeDataModel
+                            {
+                                Changed = c.Changed,
+                                Password = c.Password,
+                                UserName = c.UserName
+                            }).ToList()
+                        }
                     }).ToList()
                 },
                 Id = aggregateRoot.Id,

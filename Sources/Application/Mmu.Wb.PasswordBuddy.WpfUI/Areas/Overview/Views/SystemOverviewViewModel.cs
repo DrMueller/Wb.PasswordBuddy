@@ -15,6 +15,7 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Overview.Views
         public CommandsViewData Commands => _commandContainer.Commands;
 
         public ICommand EditSystem => _commandContainer.EditSystem;
+        public ICommand DeleteSystem => _commandContainer.DeleteSystem;
 
         public ObservableCollection<SystemOverviewEntryViewData> OverviewEntries { get; set; }
 

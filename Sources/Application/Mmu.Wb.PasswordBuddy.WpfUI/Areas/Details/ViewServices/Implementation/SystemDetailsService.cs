@@ -28,8 +28,7 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.ViewServices.Implementation
                 return vm;
             }
 
-            var systemMaybe = await _systemRepo.LoadAsync(id);
-            var system = systemMaybe.Reduce(() => throw new System.Exception($"Could not find System with ID {id}"));
+            var system = await _systemRepo.LoadAsync(id);
             
             vm.SystemId = system.Id;
             vm.SystemName = system.Name;
@@ -39,28 +38,14 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.ViewServices.Implementation
 
         public async Task SaveAsync(SystemDetailsViewData data)
         {
-            var credChanges = await GetOrCreateChanges(data.SystemId);
             var system = new Domain.Models.System(
                 data.SystemId,
                 data.SystemName,
-                credChanges,
+                new Credentials(new System.Collections.Generic.List<Credential>()),
                 data.AdditionalData
             );
 
             await _systemRepo.SaveAsync(system);
-        }
-
-        private async Task<CredentialChanges> GetOrCreateChanges(string? systemId)
-        {
-            if (string.IsNullOrEmpty(systemId))
-            {
-                return new CredentialChanges();
-            }
-
-            var existingSystemMaybe = await _systemRepo.LoadAsync(systemId);
-            var system = existingSystemMaybe.Reduce(() => throw new System.Exception($"Could not find System with ID {systemId}"));
-
-            return system.CredentialChanges;
         }
     }
 }

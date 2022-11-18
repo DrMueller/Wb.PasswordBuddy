@@ -10,8 +10,8 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Ser
         Task DeleteAsync(string id);
 
         Task<IReadOnlyCollection<T>> LoadAllAsync();
-
-        Task<Maybe<T>> LoadAsync(string id);
+        
+        Task<T> LoadAsync(string id);
 
         Task<T> SaveAsync(T aggregateRootDataModel);
     }

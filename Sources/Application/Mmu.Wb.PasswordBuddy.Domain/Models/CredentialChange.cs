@@ -10,11 +10,16 @@ namespace Mmu.Wb.PasswordBuddy.Domain.Models
     {
         public string Password { get; }
         public string UserName { get; }
+        public DateTime Changed { get; }
 
-        public CredentialChange(string password, string userName)
+        public CredentialChange(
+            string userName,
+            string password,
+            DateTime changed)
         {
             Password = password;
             UserName = userName;
+            Changed = changed;
         }
 
     }

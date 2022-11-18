@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.Components.CommandBars.ViewData;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Behaviors;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Services;
 using Mmu.Mlh.WpfCoreExtensions.Areas.Validations.Validation.Models;
+using Mmu.Wb.PasswordBuddy.WpfUI.Areas.CredentialsOverview.Views.CredentialsOverview;
 using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.ViewData;
 using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.Views.SystemData;
 using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.ViewServices;
@@ -16,8 +18,16 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.Views.Details
         private readonly IViewModelFactory _vmFactory;
         private readonly ISystemDetailsService _detailsService;
         private readonly CommandContainer _commandContainer;
+        private readonly ICredentialsOverviewService _credentialsOverviewService;
         private SystemDataViewModel _systemData;
-        
+        private CredentialsOverviewViewModel _credentialsOverview;
+
+        public CredentialsOverviewViewModel CredentialsOverview
+        {
+            get => _credentialsOverview;
+            set => OnPropertyChanged(value, ref _credentialsOverview);
+        }
+
         public SystemDataViewModel SystemData
         {
             get => _systemData;
@@ -29,11 +39,13 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.Views.Details
         public SystemDetailsViewModel(
             IViewModelFactory vmFactory,
             ISystemDetailsService detailsService,
-            CommandContainer commandContainer)
+            CommandContainer commandContainer,
+            ICredentialsOverviewService credentialsOverviewService)
         {
             _vmFactory = vmFactory;
             _detailsService = detailsService;
             _commandContainer = commandContainer;
+            _credentialsOverviewService = credentialsOverviewService;
         }
 
         public async Task InitializeAsync(params object[] initParams)
@@ -42,6 +54,9 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.Views.Details
             var id = initParams?.Any() ?? false ? (string) initParams.ElementAt(0) : null;
             var viewData = await _detailsService.LoadAsync(id);
             SystemData = await _vmFactory.CreateAsync<SystemDataViewModel>(viewData);
+            CredentialsOverview = await _vmFactory.CreateAsync<CredentialsOverviewViewModel>(id);
+            
+
         }
 
         public string HeadingDescription => "Edit";
