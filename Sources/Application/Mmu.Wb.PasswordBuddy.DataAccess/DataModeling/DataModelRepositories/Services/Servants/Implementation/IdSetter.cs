@@ -5,6 +5,8 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Ser
 {
     public class IdSetter : IIdSetter
     {
+        private static IReadOnlyCollection<Type> _typesToIgnore = new List<Type> { typeof(string), typeof(DateTime) };
+
         public void SetIds(AggregateRootDataModel agDm)
         {
             var list = new List<EntityDataModel> { agDm };
@@ -31,7 +33,7 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Ser
 
             parentProps.ForEach(propInfo =>
             {
-                if (propInfo.PropertyType.IsPrimitive)
+                if (propInfo.PropertyType.IsPrimitive || _typesToIgnore.Contains(propInfo.PropertyType))
                 {
                     return;
                 }

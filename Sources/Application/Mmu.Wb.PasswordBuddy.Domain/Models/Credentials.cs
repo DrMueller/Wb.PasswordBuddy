@@ -27,6 +27,7 @@ namespace Mmu.Wb.PasswordBuddy.Domain.Models
                 _values.Remove(existingCred);
             }
 
+            cred.UpdateLateChanged();
             _values.Add(cred);
         }
     }

@@ -1,6 +1,9 @@
 ﻿using System.Threading.Tasks;
+using Mmu.Mlh.WpfCoreExtensions.Areas.Aspects.ApplicationInformations.Models;
+using Mmu.Mlh.WpfCoreExtensions.Areas.Aspects.ApplicationInformations.Services;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Services;
-using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Overview.Views;
+using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Overview.Views.CredentialsOverview;
+using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Systems.Overview.Views;
 
 namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Common.Services.Implementation
 {
@@ -13,9 +16,14 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Common.Services.Implementation
             _vmDisplayService = vmDisplayService;
         }
 
-        public async Task NavigateToMainAsync()
+        public async Task ToMainAsync()
         {
             await _vmDisplayService.DisplayAsync<SystemOverviewViewModel>();
+        }
+
+        public async Task ToCredentialsOverviewAsync(string systemId)
+        {
+            await _vmDisplayService.DisplayAsync<CredentialsOverviewViewModel>(systemId);
         }
     }
 }

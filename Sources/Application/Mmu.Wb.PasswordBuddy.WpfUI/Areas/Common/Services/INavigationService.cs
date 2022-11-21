@@ -4,6 +4,8 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Common.Services
 {
     public interface INavigationService
     {
-        Task NavigateToMainAsync();
+        Task ToMainAsync();
+
+        Task ToCredentialsOverviewAsync(string systemId);
     }
 }
