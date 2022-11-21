@@ -51,7 +51,7 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels.Base
         public override int GetHashCode()
         {
             // ReSharper disable once NonReadonlyMemberInGetHashCode
-            return (GetType() + Id.ToString()).GetHashCode();
+            return (GetType() + Id).GetHashCode();
         }
     }
 }

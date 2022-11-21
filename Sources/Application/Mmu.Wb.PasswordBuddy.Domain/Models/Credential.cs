@@ -1,25 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mmu.Mlh.LanguageExtensions.Areas.Invariance;
+﻿using Mmu.Mlh.LanguageExtensions.Areas.Invariance;
 using Mmu.Wb.PasswordBuddy.Domain.Models.Base;
 
 namespace Mmu.Wb.PasswordBuddy.Domain.Models
 {
     public class Credential : Entity
     {
-        public string Name { get; }
-        public CredentialChanges Changes { get; }
-
-        public Credential(string name, CredentialChanges changes)
+        public Credential(
+            string? id,
+            string name,
+            string userName,
+            string password,
+            DateTime? lastChanged)
         {
             Guard.StringNotNullOrEmpty(() => name);
-            Guard.ObjectNotNull(() => changes);
+            Guard.StringNotNullOrEmpty(() => password);
 
             Name = name;
-            Changes = changes;
+            UserName = userName;
+            Password = password;
+            LastChanged = lastChanged;
         }
+
+        public DateTime? LastChanged { get; }
+        public string Name { get; }
+        public string Password { get; }
+        public string UserName { get; }
     }
 }

@@ -15,32 +15,6 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelAdapters
                 dataModel.AdditionalData);
         }
 
-        private Credentials AdaptCredentials(CredentialsDataModel creds)
-        {
-            var cred = creds.Values.Select(AdaptCredential).ToList();
-            return new Credentials(cred);
-
-        }
-
-        private Credential AdaptCredential(CredentialDataModel cred)
-        {
-            return new Credential(
-                cred.Name,
-                AdaptCredentialChanges(cred.Changes));
-        }
-
-        private CredentialChanges AdaptCredentialChanges(CredentialChangesDataModel credChanges)
-        {
-            return new CredentialChanges(credChanges.Values.Select(AdaptCredentialChange).ToList());
-        }
-
-        private CredentialChange AdaptCredentialChange(CredentialChangeDataModel credChange)
-        {
-            return new CredentialChange(credChange.UserName,
-                credChange.Password,
-                credChange.Changed);
-        }
-
         public override SystemDataModel Adapt(Domain.Models.System aggregateRoot)
         {
             return new SystemDataModel
@@ -50,20 +24,33 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelAdapters
                 {
                     Values = aggregateRoot.Credentials.Values.Select(f => new CredentialDataModel
                     {
-                        Changes = new CredentialChangesDataModel
-                        {
-                            Values = f.Changes.Values.Select(c => new CredentialChangeDataModel
-                            {
-                                Changed = c.Changed,
-                                Password = c.Password,
-                                UserName = c.UserName
-                            }).ToList()
-                        }
+                        Id = f.Id,
+                        LastChanged = f.LastChanged,
+                        Name = f.Name,
+                        Password = f.Password,
+                        UserName = f.UserName
                     }).ToList()
                 },
                 Id = aggregateRoot.Id,
                 Name = aggregateRoot.Name
             };
+        }
+
+        private static Credential AdaptCredential(CredentialDataModel cred)
+        {
+            return new Credential(
+                cred.Id,
+                cred.Name,
+                cred.UserName,
+                cred.Password,
+                cred.LastChanged);
+        }
+
+        private Credentials AdaptCredentials(CredentialsDataModel creds)
+        {
+            var cred = creds.Values.Select(AdaptCredential).ToList();
+
+            return new Credentials(cred);
         }
     }
 }

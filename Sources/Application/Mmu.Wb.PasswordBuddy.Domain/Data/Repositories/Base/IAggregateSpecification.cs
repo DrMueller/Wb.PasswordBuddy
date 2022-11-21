@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using Mmu.Wb.PasswordBuddy.Domain.Models.Base;
 
 namespace Mmu.Wb.PasswordBuddy.Domain.Data.Repositories.Base

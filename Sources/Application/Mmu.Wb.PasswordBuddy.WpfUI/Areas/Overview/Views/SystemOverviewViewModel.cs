@@ -12,25 +12,25 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Overview.Views
     {
         private readonly CommandContainer _commandContainer;
 
-        public CommandsViewData Commands => _commandContainer.Commands;
-
-        public ICommand EditSystem => _commandContainer.EditSystem;
-        public ICommand DeleteSystem => _commandContainer.DeleteSystem;
-
-        public ObservableCollection<SystemOverviewEntryViewData> OverviewEntries { get; set; }
-
         public SystemOverviewViewModel(CommandContainer commandContainer)
         {
             _commandContainer = commandContainer;
         }
 
-        public async Task InitializeAsync(params object[] initParams)
-        {
-            await _commandContainer.InitializeAsync(this);
-        }
+        public CommandsViewData Commands => _commandContainer.Commands;
+        public ICommand DeleteSystem => _commandContainer.DeleteSystem;
+
+        public ICommand EditSystem => _commandContainer.EditSystem;
 
         public string HeadingDescription => "Overview";
         public string NavigationDescription => "Overview";
         public int NavigationSequence => 1;
+
+        public ObservableCollection<SystemOverviewEntryViewData> OverviewEntries { get; set; }
+
+        public async Task InitializeAsync(params object[] initParams)
+        {
+            await _commandContainer.InitializeAsync(this);
+        }
     }
 }

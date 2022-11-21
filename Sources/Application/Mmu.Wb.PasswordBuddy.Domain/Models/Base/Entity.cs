@@ -5,7 +5,27 @@ namespace Mmu.Wb.PasswordBuddy.Domain.Models.Base
     [PublicAPI]
     public abstract class Entity
     {
-        public string Id { get; protected set; }
+        public string Id { get; protected set; } = "";
+
+        public static bool operator ==(Entity? a, Entity? b)
+        {
+            if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+            {
+                return false;
+            }
+
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(Entity a, Entity? b)
+        {
+            return !(a == b);
+        }
 
         public override bool Equals(object? obj)
         {
@@ -29,27 +49,7 @@ namespace Mmu.Wb.PasswordBuddy.Domain.Models.Base
 
         public override int GetHashCode()
         {
-            return (GetType() + Id.ToString()).GetHashCode(StringComparison.InvariantCulture);
-        }
-
-        public static bool operator ==(Entity? a, Entity? b)
-        {
-            if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
-            {
-                return true;
-            }
-
-            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
-            {
-                return false;
-            }
-
-            return a.Equals(b);
-        }
-
-        public static bool operator !=(Entity a, Entity b)
-        {
-            return !(a == b);
+            return (GetType() + Id).GetHashCode(StringComparison.InvariantCulture);
         }
     }
 }

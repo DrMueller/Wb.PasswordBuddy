@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using JetBrains.Annotations;
-using Mmu.Mlh.WpfCoreExtensions.Areas.Aspects.ApplicationInformations.Services;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.Commands;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.Components.CommandBars.ViewData;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.ViewModelCommands;
@@ -9,9 +8,6 @@ using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Services;
 using Mmu.Wb.PasswordBuddy.Domain.Services;
 using Mmu.Wb.PasswordBuddy.WpfUI.Areas.CredentialDetails.Views.Details;
 using Mmu.Wb.PasswordBuddy.WpfUI.Areas.CredentialsOverview.ViewData;
-using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.Views.Details;
-using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.ViewServices;
-using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Overview.ViewData;
 
 namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.CredentialsOverview.Views.CredentialsOverview
 {
@@ -21,7 +17,6 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.CredentialsOverview.Views.Credentials
         private readonly ICredentialsService _credentialsService;
         private readonly IViewModelDisplayService _displayService;
         private CredentialsOverviewViewModel _context;
-        public CommandsViewData Commands { get; private set; }
 
         public CommandContainer(
             ICredentialsService credentialsService,
@@ -31,47 +26,35 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.CredentialsOverview.Views.Credentials
             _displayService = displayService;
         }
 
-        private IViewModelCommand CreateCredential
-        {
-            get
-            {
-                return new ViewModelCommand("New",
-                    new AsyncRelayCommand(async () =>
-                    {
-                        await _displayService.DisplayAsync<CredentialDetailsViewModel>(_context.SelectedSystemId);
-                    }));
-            }
-        }
+        public CommandsViewData Commands { get; private set; }
 
-        public ICommand DeleteCredential
-        {
-            get
+        public ICommand DeleteCredential =>
+            new ParametredAsyncRelayCommand(async obj =>
             {
-                return new ParametredAsyncRelayCommand(async obj =>
-                {
-                    var data = (CredentialOverviewEntryViewData)obj;
-                    await _credentialsService.DeleteCredentials(_context.SelectedSystemId, data.CredentialId);
-                    _context.Overview.Remove(data);
-                });
-            }
-        }
+                var data = (CredentialOverviewEntryViewData)obj;
+                await _credentialsService.DeleteCredentials(_context.SelectedSystem.Id, data.CredentialId);
+                _context.Overview.Remove(data);
+            });
 
-        public ICommand EditCredential
-        {
-            get
+        public ICommand EditCredential =>
+            new ParametredAsyncRelayCommand(async obj =>
             {
-                return new ParametredAsyncRelayCommand(async obj =>
+                var data = (CredentialOverviewEntryViewData)obj;
+                await _displayService.DisplayAsync<CredentialDetailsViewModel>(_context.SelectedSystem.Id, data.CredentialId);
+            });
+
+        private IViewModelCommand CreateCredential =>
+            new ViewModelCommand("New",
+                new AsyncRelayCommand(async () =>
                 {
-                    var data = (CredentialOverviewEntryViewData)obj;
-                    await _displayService.DisplayAsync<CredentialDetailsViewModel>(_context.SelectedSystemId, data.CredentialId);
-                });
-            }
-        }
+                    await _displayService.DisplayAsync<CredentialDetailsViewModel>(_context.SelectedSystem.Id);
+                }));
 
         public Task InitializeAsync(CredentialsOverviewViewModel context)
         {
             _context = context;
-            Commands = new CommandsViewData();
+            Commands = new CommandsViewData(
+                CreateCredential);
 
             return Task.CompletedTask;
         }

@@ -6,10 +6,9 @@ using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.Commands;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.Components.CommandBars.ViewData;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.ViewModelCommands;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Services;
+using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Common.Services;
 using Mmu.Wb.PasswordBuddy.WpfUI.Areas.CredentialsOverview.Views.CredentialsOverview;
-using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.Views.SystemData;
 using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.ViewServices;
-using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Overview.Views;
 
 namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.Views.Details
 {
@@ -17,57 +16,43 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.Views.Details
     public class CommandContainer : IViewModelCommandContainer<SystemDetailsViewModel>
     {
         private readonly ISystemDetailsService _detailsService;
-        private readonly IViewModelDisplayService _vmDisplayService;
         private readonly IInformationPublisher _informationPublisher;
+        private readonly INavigationService _navigationService;
+        private readonly IViewModelDisplayService _vmDisplayService;
         private SystemDetailsViewModel _context;
-        public CommandsViewData Commands { get; private set; }
 
         public CommandContainer(
             ISystemDetailsService detailsService,
-            IViewModelDisplayService vmDisplayService,
-            IInformationPublisher informationPublisher)
+            IInformationPublisher informationPublisher,
+            INavigationService navigationService,
+            IViewModelDisplayService vmDisplayService)
         {
             _detailsService = detailsService;
-            _vmDisplayService = vmDisplayService;
             _informationPublisher = informationPublisher;
+            _navigationService = navigationService;
+            _vmDisplayService = vmDisplayService;
         }
-        private ViewModelCommand Save =>
-        new("Save",
-            new AsyncRelayCommand(async () =>
-                                  {
-                                      await _detailsService.SaveAsync(_context.SystemData.Data);
-                                      _informationPublisher.Publish(
-                                          InformationEntry.CreateInfo("System saved.", false, 5));
-                                      await NavigateToOverviewAsync();
-                                  }));
+
+        public CommandsViewData Commands { get; private set; }
 
         private ViewModelCommand Cancel =>
             new(
                 "Cancel",
-                new AsyncRelayCommand(async () => await NavigateToOverviewAsync()));
+                new AsyncRelayCommand(_navigationService.NavigateToMainAsync));
 
         private ViewModelCommand Credentials =>
             new(
                 "Credentials",
                 new AsyncRelayCommand(async () => await NavigateToCredentials()));
-
-        private async Task NavigateToOverviewAsync()
-        {
-            await _vmDisplayService.DisplayAsync<SystemOverviewViewModel>();
-        }
-
-        private async Task NavigateToCredentials()
-        {
-            if (_context.SystemData.Data.SystemId == null)
-            {
-                _informationPublisher.Publish(
-                    InformationEntry.CreateError("System must be saved before adding credentials."));
-                return;
-            }
-
-            await _vmDisplayService.DisplayAsync<CredentialsOverviewViewModel>(_context.SystemData.Data.SystemId);
-        }
-        
+        private ViewModelCommand Save =>
+            new("Save",
+                new AsyncRelayCommand(async () =>
+                {
+                    await _detailsService.SaveAsync(_context.SystemData.Data);
+                    _informationPublisher.Publish(
+                        InformationEntry.CreateInfo("System saved.", false, 5));
+                    await _navigationService.NavigateToMainAsync();
+                }));
 
         public Task InitializeAsync(SystemDetailsViewModel context)
         {
@@ -78,6 +63,19 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.Views.Details
                 Cancel);
 
             return Task.CompletedTask;
+        }
+
+        private async Task NavigateToCredentials()
+        {
+            if (_context.SystemData.Data.SystemId == null)
+            {
+                _informationPublisher.Publish(
+                    InformationEntry.CreateError("System must be saved before adding credentials."));
+
+                return;
+            }
+
+            await _vmDisplayService.DisplayAsync<CredentialsOverviewViewModel>(_context.SystemData.Data.SystemId);
         }
     }
 }

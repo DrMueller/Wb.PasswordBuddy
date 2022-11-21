@@ -1,4 +1,4 @@
 - DataModeling redesignen
-- Additional Data not saved
-- Introduce Passwort History
-- Bessere Verwaltung von DataModel IDs
+- Grid Buttons ohne Margin 
+- WPF Validation
+- LastChange befüllen

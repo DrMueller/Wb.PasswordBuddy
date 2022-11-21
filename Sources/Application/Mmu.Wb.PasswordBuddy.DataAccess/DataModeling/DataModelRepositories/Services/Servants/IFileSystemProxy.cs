@@ -1,4 +1,5 @@
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels.Base;
+using File = Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Models.File;
 
 namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services.Servants
 {
@@ -8,8 +9,8 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Ser
     {
         void DeleteFile(string id);
 
-        IReadOnlyCollection<Models.File> LoadAllFiles();
+        IReadOnlyCollection<File> LoadAllFiles();
 
-        void SaveFile(Models.File file);
+        void SaveFile(File file);
     }
 }

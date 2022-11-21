@@ -19,28 +19,6 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Overview.Views
         private readonly ISystemOverviewService _overviewService;
         private readonly ISystemRepository _systemRepo;
         private SystemOverviewViewModel _context;
-        public CommandsViewData Commands { get; private set; }
-
-        public ICommand EditSystem
-        {
-            get
-            {
-                return new ParametredAsyncRelayCommand(async obj =>
-                                                       {
-                                                           var data = (SystemOverviewEntryViewData)obj;
-                                                           await _displayService.DisplayAsync<SystemDetailsViewModel>(data.SystemId);
-                                                       });
-            }
-        }
-
-        public ICommand DeleteSystem =>
-            new ParametredAsyncRelayCommand(
-                async obj =>
-                {
-                    var data = (SystemOverviewEntryViewData)obj;
-                    await _systemRepo.DeleteAsync(data.SystemId);
-                    _context.OverviewEntries.Remove(data);
-                });
 
         public CommandContainer(
             IViewModelDisplayService displayService,
@@ -51,6 +29,24 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Overview.Views
             _overviewService = overviewService;
             _systemRepo = systemRepo;
         }
+
+        public CommandsViewData Commands { get; private set; }
+
+        public ICommand DeleteSystem =>
+            new ParametredAsyncRelayCommand(
+                async obj =>
+                {
+                    var data = (SystemOverviewEntryViewData)obj;
+                    await _systemRepo.DeleteAsync(data.SystemId);
+                    _context.OverviewEntries.Remove(data);
+                });
+
+        public ICommand EditSystem =>
+            new ParametredAsyncRelayCommand(async obj =>
+            {
+                var data = (SystemOverviewEntryViewData)obj;
+                await _displayService.DisplayAsync<SystemDetailsViewModel>(data.SystemId);
+            });
 
         public async Task InitializeAsync(SystemOverviewViewModel context)
         {

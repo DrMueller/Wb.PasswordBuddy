@@ -1,4 +1,3 @@
-
 using Mmu.Mlh.LanguageExtensions.Areas.Invariance;
 
 namespace Mmu.Wb.PasswordBuddy.CrossCutting.Errors.Implementation

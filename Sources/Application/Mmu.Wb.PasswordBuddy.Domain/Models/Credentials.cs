@@ -1,9 +1,4 @@
 ﻿using Mmu.Mlh.LanguageExtensions.Areas.DeepCopying;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mmu.Wb.PasswordBuddy.Domain.Models
 {
@@ -11,12 +6,28 @@ namespace Mmu.Wb.PasswordBuddy.Domain.Models
     {
         private readonly List<Credential> _values;
 
-        public IReadOnlyCollection<Credential> Values => _values.DeepCopy();
-            
         public Credentials(List<Credential> values)
         {
             _values = values;
         }
 
+        public IReadOnlyCollection<Credential> Values => _values.DeepCopy();
+
+        public void RemoveCredential(string credentialId)
+        {
+            _values.RemoveAll(f => f.Id == credentialId);
+        }
+
+        public void UpsertCredential(Credential cred)
+        {
+            var existingCred = _values.FirstOrDefault(f => f.Id == cred.Id);
+
+            if (existingCred != null)
+            {
+                _values.Remove(existingCred);
+            }
+
+            _values.Add(cred);
+        }
     }
 }

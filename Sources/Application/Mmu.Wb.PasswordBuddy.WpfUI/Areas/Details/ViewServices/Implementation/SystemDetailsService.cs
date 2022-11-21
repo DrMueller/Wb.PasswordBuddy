@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using Mmu.Mlh.LanguageExtensions.Areas.Types.Maybes;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Services;
 using Mmu.Wb.PasswordBuddy.Domain.Data.Repositories;
 using Mmu.Wb.PasswordBuddy.Domain.Models;
@@ -23,15 +23,17 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.ViewServices.Implementation
         public async Task<SystemDetailsViewData> LoadAsync(string? id)
         {
             var vm = await _vmFactory.CreateAsync<SystemDetailsViewData>();
+
             if (string.IsNullOrEmpty(id))
             {
                 return vm;
             }
 
             var system = await _systemRepo.LoadAsync(id);
-            
+
             vm.SystemId = system.Id;
             vm.SystemName = system.Name;
+            vm.AdditionalData = system.AdditionalData;
 
             return vm;
         }
@@ -41,7 +43,7 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.ViewServices.Implementation
             var system = new Domain.Models.System(
                 data.SystemId,
                 data.SystemName,
-                new Credentials(new System.Collections.Generic.List<Credential>()),
+                new Credentials(new List<Credential>()),
                 data.AdditionalData
             );
 

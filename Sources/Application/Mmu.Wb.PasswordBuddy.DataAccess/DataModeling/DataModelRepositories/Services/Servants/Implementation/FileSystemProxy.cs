@@ -1,5 +1,6 @@
 using System.IO.Abstractions;
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels.Base;
+using File = Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Models.File;
 
 namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services.Servants.Implementation
 {
@@ -22,7 +23,7 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Ser
             _fileSystem.File.Delete(filePath);
         }
 
-        public IReadOnlyCollection<Models.File> LoadAllFiles()
+        public IReadOnlyCollection<File> LoadAllFiles()
         {
             var files = EnumerateFilesInDefinedPath().Select(
                 filePath =>
@@ -30,13 +31,13 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Ser
                     var fileName = _fileSystem.Path.GetFileName(filePath);
                     var fileContent = _fileSystem.File.ReadAllText(filePath);
 
-                    return new Models.File(fileName, fileContent);
+                    return new File(fileName, fileContent);
                 });
 
             return files.ToList();
         }
 
-        public void SaveFile(Models.File file)
+        public void SaveFile(File file)
         {
             var filePath = CreateFilePath(file.FileName);
 

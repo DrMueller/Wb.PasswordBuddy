@@ -7,6 +7,7 @@ namespace Mmu.Wb.PasswordBuddy.CrossCutting.LanguageExtensions.Collections
             Func<T, TResult> selector)
         {
             var data = await task;
+
             return selector(data);
         }
     }

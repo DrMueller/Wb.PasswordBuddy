@@ -3,7 +3,6 @@ using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Service
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels;
 using Mmu.Wb.PasswordBuddy.DataAccess.Repositories.Base;
 using Mmu.Wb.PasswordBuddy.Domain.Data.Repositories;
-using Mmu.Wb.PasswordBuddy.Domain.Models;
 
 namespace Mmu.Wb.PasswordBuddy.DataAccess.Repositories
 {

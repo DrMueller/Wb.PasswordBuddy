@@ -1,11 +1,11 @@
-﻿using JetBrains.Annotations;
+﻿using System.IO.Abstractions;
+using JetBrains.Annotations;
 using Lamar;
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelAdapters;
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services;
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services.Implementation;
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services.Servants;
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services.Servants.Implementation;
-using System.IO.Abstractions;
 
 namespace Mmu.Wb.PasswordBuddy.DataAccess
 {

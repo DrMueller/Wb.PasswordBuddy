@@ -1,6 +1,4 @@
 ﻿using System.Threading.Tasks;
-using System.Windows.Markup;
-using Mmu.Mlh.LanguageExtensions.Areas.Invariance;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Behaviors;
 using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Details.ViewData;

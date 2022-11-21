@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using Mmu.Mlh.WpfCoreExtensions.Areas.Initialization.Orchestration.Models;
 using Mmu.Mlh.WpfCoreExtensions.Areas.Initialization.Orchestration.Services;
@@ -12,7 +6,7 @@ using Mmu.Mlh.WpfCoreExtensions.Areas.Initialization.Orchestration.Services;
 namespace Mmu.Wb.PasswordBuddy.WpfUI
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    ///     Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {

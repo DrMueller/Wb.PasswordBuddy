@@ -25,6 +25,7 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels.Base
             }
 
             var other = obj as T;
+
             return Equals(other);
         }
 
@@ -78,6 +79,7 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels.Base
             foreach (var field in fields)
             {
                 var value = field.GetValue(this);
+
                 if (value == null)
                 {
                     continue;
