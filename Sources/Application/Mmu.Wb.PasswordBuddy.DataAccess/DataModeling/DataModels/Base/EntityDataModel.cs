@@ -5,17 +5,17 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels.Base
     [PublicAPI]
     public abstract class EntityDataModel
     {
-        public string DataModelTypeName => GetType().FullName;
-        public string Id { get; set; }
+        public string DataModelTypeName => GetType().FullName!;
+        public string Id { get; set; } = "";
 
-        public static bool operator ==(EntityDataModel a, EntityDataModel b)
+        public static bool operator ==(EntityDataModel? a, EntityDataModel? b)
         {
-            if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
+            if (a is null && b is null)
             {
                 return true;
             }
 
-            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+            if (a is null || b is null)
             {
                 return false;
             }
@@ -28,9 +28,9 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels.Base
             return !(a == b);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            if (!(obj is EntityDataModel compareTo))
+            if (obj is not EntityDataModel compareTo)
             {
                 return false;
             }

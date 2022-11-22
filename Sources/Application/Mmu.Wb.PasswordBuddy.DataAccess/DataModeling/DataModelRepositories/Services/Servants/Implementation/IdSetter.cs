@@ -5,7 +5,8 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Ser
 {
     public class IdSetter : IIdSetter
     {
-        private static IReadOnlyCollection<Type> _typesToIgnore = new List<Type> { typeof(string), typeof(DateTime) };
+        private static readonly IReadOnlyCollection<Type> _typesToIgnore =
+            new List<Type> { typeof(string), typeof(DateTime) };
 
         public void SetIds(AggregateRootDataModel agDm)
         {
@@ -40,19 +41,20 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Ser
 
                 if (propInfo.PropertyType == typeof(EntityDataModel))
                 {
-                    var val = (EntityDataModel)propInfo.GetValue(parent);
+                    var val = (EntityDataModel)propInfo.GetValue(parent)!;
                     subEntities.Add(val);
                 }
 
-                if (propInfo.PropertyType.GetInterfaces().Any(i => i.IsAssignableTo(typeof(IEnumerable<EntityDataModel>))))
+                if (propInfo.PropertyType.GetInterfaces()
+                    .Any(i => i.IsAssignableTo(typeof(IEnumerable<EntityDataModel>))))
                 {
-                    var val = (IEnumerable<EntityDataModel>)propInfo.GetValue(parent);
+                    var val = (IEnumerable<EntityDataModel>)propInfo.GetValue(parent)!;
                     subEntities.AddRange(val);
                 }
 
                 if (propInfo.PropertyType.IsAssignableTo(typeof(IEnumerable<object>)))
                 {
-                    var arr = (IEnumerable<object>)propInfo.GetValue(parent);
+                    var arr = (IEnumerable<object>)propInfo.GetValue(parent)!;
 
                     arr.ForEach(o => CollectSubEntities(o, subEntities));
                 }

@@ -1,4 +1,1 @@
-- DataModeling redesignen
-- LastChange befüllen
 - Margin bei Command Bars entfernen
-- Create a Copy of all Passwords

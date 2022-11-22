@@ -6,7 +6,8 @@ namespace Mmu.Wb.PasswordBuddy.CrossCutting.DeepCopying
     // ORIGINAL in LanguageExtensions
     public static class DeepCopyService
     {
-        private static readonly MethodInfo? _cloneMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly MethodInfo? _cloneMethod =
+            typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
 
         public static T DeepCopy<T>(T source)
         {
@@ -27,7 +28,10 @@ namespace Mmu.Wb.PasswordBuddy.CrossCutting.DeepCopying
             return type.IsValueType & type.IsPrimitive;
         }
 
-        private static void CopyFields(object originalObject, IDictionary<object, object> visited, object cloneObject, IReflect typeToReflect, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.FlattenHierarchy, Func<FieldInfo, bool>? filter = null)
+        private static void CopyFields(object originalObject, IDictionary<object, object> visited, object cloneObject,
+            IReflect typeToReflect,
+            BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public |
+                                        BindingFlags.FlattenHierarchy, Func<FieldInfo, bool>? filter = null)
         {
             foreach (var fieldInfo in typeToReflect.GetFields(bindingFlags))
             {
@@ -79,19 +83,21 @@ namespace Mmu.Wb.PasswordBuddy.CrossCutting.DeepCopying
 
                 if (CheckIfTypeIsPrimitive(arrayType!) == false)
                 {
-                    var clonedArray = (Array)cloneObject;
-                    clonedArray.ForEach((array, indices) => array.SetValue(DeepCopy(clonedArray.GetValue(indices), visited), indices));
+                    var clonedArray = (Array)cloneObject!;
+                    clonedArray.ForEach((array, indices) =>
+                        array.SetValue(DeepCopy(clonedArray.GetValue(indices), visited), indices));
                 }
             }
 
-            visited.Add(originalObject, cloneObject);
-            CopyFields(originalObject, visited, cloneObject, typeToReflect);
-            RecursiveCopyBaseTypePrivateFields(originalObject, visited, cloneObject, typeToReflect);
+            visited.Add(originalObject, cloneObject!);
+            CopyFields(originalObject, visited, cloneObject!, typeToReflect);
+            RecursiveCopyBaseTypePrivateFields(originalObject, visited, cloneObject!, typeToReflect);
 
             return cloneObject;
         }
 
-        private static void RecursiveCopyBaseTypePrivateFields(object originalObject, IDictionary<object, object> visited, object cloneObject, Type typeToReflect)
+        private static void RecursiveCopyBaseTypePrivateFields(object originalObject,
+            IDictionary<object, object> visited, object cloneObject, Type typeToReflect)
         {
             if (typeToReflect.BaseType == null)
             {
@@ -99,7 +105,8 @@ namespace Mmu.Wb.PasswordBuddy.CrossCutting.DeepCopying
             }
 
             RecursiveCopyBaseTypePrivateFields(originalObject, visited, cloneObject, typeToReflect.BaseType);
-            CopyFields(originalObject, visited, cloneObject, typeToReflect.BaseType, BindingFlags.Instance | BindingFlags.NonPublic, info => info.IsPrivate);
+            CopyFields(originalObject, visited, cloneObject, typeToReflect.BaseType,
+                BindingFlags.Instance | BindingFlags.NonPublic, info => info.IsPrivate);
         }
     }
 }

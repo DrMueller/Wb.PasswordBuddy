@@ -43,7 +43,7 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Details.ViewServices.Impl
         {
             var system = await _systemRepo.LoadAsync(systemId);
             var cred = new Credential(
-                data.ID,
+                data.Id,
                 data.Name,
                 data.UserName,
                 data.Password,

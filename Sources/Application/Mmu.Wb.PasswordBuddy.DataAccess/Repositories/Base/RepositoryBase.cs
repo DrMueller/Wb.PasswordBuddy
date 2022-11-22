@@ -1,7 +1,7 @@
 ﻿using Mmu.Mlh.LanguageExtensions.Areas.Functional;
 using Mmu.Mlh.LanguageExtensions.Areas.Tasks;
 using Mmu.Wb.PasswordBuddy.CrossCutting.LanguageExtensions.Collections;
-using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelAdapters;
+using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelAdapters.Base;
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services;
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels.Base;
 using Mmu.Wb.PasswordBuddy.Domain.Models.Base;

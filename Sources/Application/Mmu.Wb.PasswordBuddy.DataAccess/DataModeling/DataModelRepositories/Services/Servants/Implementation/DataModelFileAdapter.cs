@@ -9,7 +9,7 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Ser
     {
         public T AdaptToDataModel(File dataModelFile)
         {
-            return JsonConvert.DeserializeObject<T>(dataModelFile.Content);
+            return JsonConvert.DeserializeObject<T>(dataModelFile.Content)!;
         }
 
         public File AdaptToFile(T dataModel)

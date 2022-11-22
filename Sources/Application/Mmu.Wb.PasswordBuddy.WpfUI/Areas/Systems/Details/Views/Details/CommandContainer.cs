@@ -18,7 +18,7 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Systems.Details.Views.Details
         private readonly IInformationPublisher _informationPublisher;
         private readonly INavigationService _navigationService;
         private readonly IViewModelDisplayService _vmDisplayService;
-        private SystemDetailsViewModel _context;
+        private SystemDetailsViewModel _context = null!;
 
         public CommandContainer(
             ISystemDetailsService detailsService,
@@ -32,7 +32,7 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Systems.Details.Views.Details
             _vmDisplayService = vmDisplayService;
         }
 
-        public CommandsViewData Commands { get; private set; }
+        public CommandsViewData Commands { get; private set; } = null!;
 
         private ViewModelCommand Cancel =>
             new(
@@ -43,6 +43,27 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Systems.Details.Views.Details
             new(
                 "Credentials",
                 new AsyncRelayCommand(async () => await NavigateToCredentials()));
+
+        private ViewModelCommand Save =>
+            new("Save",
+                new AsyncRelayCommand(async () =>
+                {
+                    await _detailsService.SaveAsync(_context.SystemData.Data);
+                    _informationPublisher.Publish(
+                        InformationEntry.CreateInfo("System saved.", false, 5));
+                    await _navigationService.ToMainAsync();
+                }, () => !_context.SystemData.Data.RevalidateAnyErrors()));
+
+        public Task InitializeAsync(SystemDetailsViewModel context)
+        {
+            _context = context;
+            Commands = new CommandsViewData(
+                Credentials,
+                Save,
+                Cancel);
+
+            return Task.CompletedTask;
+        }
 
         private async Task NavigateToCredentials()
         {
@@ -56,28 +77,5 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Systems.Details.Views.Details
 
             await _navigationService.ToCredentialsOverviewAsync(_context.SystemData.Data.SystemId);
         }
-
-        private ViewModelCommand Save =>
-            new("Save",
-                new AsyncRelayCommand(async () =>
-                {
-                    await _detailsService.SaveAsync(_context.SystemData.Data);
-                    _informationPublisher.Publish(
-                        InformationEntry.CreateInfo("System saved.", false, 5));
-                    await _navigationService.ToMainAsync();
-                }));
-
-        public Task InitializeAsync(SystemDetailsViewModel context)
-        {
-            _context = context;
-            Commands = new CommandsViewData(
-                Credentials,
-                Save,
-                Cancel);
-
-            return Task.CompletedTask;
-        }
-
-
     }
 }

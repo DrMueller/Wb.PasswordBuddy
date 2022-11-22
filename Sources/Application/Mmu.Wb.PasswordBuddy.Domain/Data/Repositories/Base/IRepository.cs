@@ -1,11 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Mmu.Mlh.LanguageExtensions.Areas.Types.Maybes;
 using Mmu.Wb.PasswordBuddy.Domain.Models.Base;
 
 namespace Mmu.Wb.PasswordBuddy.Domain.Data.Repositories.Base
 {
-    [SuppressMessage("Design", "CA1040:Avoid empty interfaces", Justification = "Marker interface for easier generic handling")]
     public interface IRepository
     {
     }

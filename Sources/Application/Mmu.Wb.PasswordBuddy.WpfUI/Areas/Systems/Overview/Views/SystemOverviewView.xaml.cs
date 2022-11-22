@@ -6,7 +6,7 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Systems.Overview.Views
     /// <summary>
     ///     Interaction logic for SystemOverviewView.xaml
     /// </summary>
-    public partial class SystemOverviewView : UserControl, IViewMap<SystemOverviewViewModel>
+    public partial class SystemOverviewView : IViewMap<SystemOverviewViewModel>
     {
         public SystemOverviewView()
         {

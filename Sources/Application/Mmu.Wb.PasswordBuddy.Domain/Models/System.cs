@@ -9,7 +9,7 @@ namespace Mmu.Wb.PasswordBuddy.Domain.Models
         private readonly Credentials _credentials;
 
         public System(
-            string? id,
+            string id,
             string name,
             Credentials credentials,
             string additionalData)

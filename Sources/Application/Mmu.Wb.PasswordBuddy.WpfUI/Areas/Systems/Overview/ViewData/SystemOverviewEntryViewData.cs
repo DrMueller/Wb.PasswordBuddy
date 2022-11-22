@@ -1,7 +1,9 @@
-﻿using Mmu.Mlh.LanguageExtensions.Areas.Invariance;
+﻿using JetBrains.Annotations;
+using Mmu.Mlh.LanguageExtensions.Areas.Invariance;
 
 namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Systems.Overview.ViewData
 {
+    [PublicAPI]
     public class SystemOverviewEntryViewData
     {
         public SystemOverviewEntryViewData(string systemId, string systemName)

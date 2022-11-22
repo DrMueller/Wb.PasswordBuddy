@@ -1,6 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Mmu.Mlh.WpfCoreExtensions.Areas.Aspects.ApplicationInformations.Models;
-using Mmu.Mlh.WpfCoreExtensions.Areas.Aspects.ApplicationInformations.Services;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Services;
 using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Overview.Views.CredentialsOverview;
 using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Systems.Overview.Views;

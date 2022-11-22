@@ -14,8 +14,7 @@
             do
             {
                 action(array, walker.Position);
-            }
-            while (walker.Step());
+            } while (walker.Step());
         }
     }
 }

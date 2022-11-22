@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Behaviors;
 using Mmu.Mlh.WpfCoreExtensions.Areas.Validations.Configuration.Services;
 using Mmu.Mlh.WpfCoreExtensions.Areas.Validations.Rules;
@@ -7,25 +8,25 @@ using Mmu.Mlh.WpfCoreExtensions.Areas.Validations.Validation.Models;
 
 namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Details.ViewData
 {
+    [PublicAPI]
     public class CredentialDetailsViewData : ValidatableViewModel<CredentialDetailsViewData>
     {
-        private string _id;
+        private string _id = null!;
+        private string _name = null!;
+        private string _password = null!;
+        private string _useName = null!;
 
-        public string ID
+        public string Id
         {
             get => _id;
             set => OnPropertyChanged(value, ref _id);
         }
 
-        public string IdDescription => string.IsNullOrEmpty(ID) ? "New" : ID;
+        public string IdDescription => string.IsNullOrEmpty(Id) ? "New" : Id;
 
         public DateTime? LastChanged { get; private set; }
 
-        public string LastChangedDescription => LastChanged == null ? "Never" : LastChanged.ToString();
-
-        private string _name;
-        private string _useName;
-        private string _password;
+        public string LastChangedDescription => LastChanged == null ? "Never" : LastChanged.ToString()!;
 
         public string Name
         {
@@ -48,12 +49,13 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Details.ViewData
 
         protected override Task OnInitializeAsync(params object[] initParams)
         {
-            ID = (string)initParams[0];
+            Id = (string)initParams[0];
             LastChanged = (DateTime?)initParams[1];
             return base.OnInitializeAsync(initParams);
         }
 
-        protected override ValidationContainer<CredentialDetailsViewData> ConfigureValidation(IValidationConfigurationBuilder<CredentialDetailsViewData> builder)
+        protected override ValidationContainer<CredentialDetailsViewData> ConfigureValidation(
+            IValidationConfigurationBuilder<CredentialDetailsViewData> builder)
         {
             return builder
                 .ForProperty(f => f.Name)

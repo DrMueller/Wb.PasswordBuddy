@@ -9,12 +9,12 @@ namespace Mmu.Wb.PasswordBuddy.Domain.Models.Base
 
         public static bool operator ==(Entity? a, Entity? b)
         {
-            if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
+            if (a is null && b is null)
             {
                 return true;
             }
 
-            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+            if (a is null || b is null)
             {
                 return false;
             }
@@ -22,7 +22,7 @@ namespace Mmu.Wb.PasswordBuddy.Domain.Models.Base
             return a.Equals(b);
         }
 
-        public static bool operator !=(Entity a, Entity? b)
+        public static bool operator !=(Entity? a, Entity? b)
         {
             return !(a == b);
         }

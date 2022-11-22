@@ -1,4 +1,4 @@
-﻿using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelAdapters.Implementation;
+﻿using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelAdapters.Base;
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModels;
 using Mmu.Wb.PasswordBuddy.Domain.Models;
 
@@ -46,7 +46,7 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelAdapters
                 cred.LastChanged);
         }
 
-        private Credentials AdaptCredentials(CredentialsDataModel creds)
+        private static Credentials AdaptCredentials(CredentialsDataModel creds)
         {
             var cred = creds.Values.Select(AdaptCredential).ToList();
 

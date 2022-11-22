@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.Components.CommandBars.ViewData;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Behaviors;
@@ -8,12 +9,13 @@ using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Details.ViewServices;
 
 namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Details.Views.Details
 {
+    [PublicAPI]
     public class CredentialDetailsViewModel : ViewModelBase, IInitializableViewModel, IDisplayableViewModel
     {
         private readonly CommandContainer _commandContainer;
         private readonly ICredentialDetailsViewService _credentialDetailsService;
         private readonly IViewModelFactory _viewModelFactory;
-        private CredentialDataViewModel _credentialData;
+        private CredentialDataViewModel _credentialData = null!;
 
         public CredentialDetailsViewModel(
             IViewModelFactory viewModelFactory,
@@ -32,9 +34,9 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Details.Views.Details
             get => _credentialData;
             set => OnPropertyChanged(value, ref _credentialData);
         }
-        public string HeadingDescription { get; } = "Edit Credentials";
 
-        public string SystemId { get; private set; }
+        public string SystemId { get; private set; } = null!;
+        public string HeadingDescription { get; } = "Edit Credentials";
 
         public async Task InitializeAsync(params object[] initParams)
         {

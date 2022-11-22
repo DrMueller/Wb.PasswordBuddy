@@ -1,7 +1,9 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Overview.ViewData
 {
+    [PublicAPI]
     public class CredentialOverviewEntryViewData
     {
         public CredentialOverviewEntryViewData(

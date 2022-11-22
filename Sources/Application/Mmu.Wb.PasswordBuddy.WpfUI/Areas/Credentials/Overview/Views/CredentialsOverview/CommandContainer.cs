@@ -16,7 +16,7 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Overview.Views.Credential
     {
         private readonly ICredentialsService _credentialsService;
         private readonly IViewModelDisplayService _displayService;
-        private CredentialsOverviewViewModel _context;
+        private CredentialsOverviewViewModel _context = null!;
 
         public CommandContainer(
             ICredentialsService credentialsService,
@@ -26,7 +26,7 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Overview.Views.Credential
             _displayService = displayService;
         }
 
-        public CommandsViewData Commands { get; private set; }
+        public CommandsViewData Commands { get; private set; } = null!;
 
         public ICommand DeleteCredential =>
             new ParametredAsyncRelayCommand(async obj =>
@@ -40,7 +40,8 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Overview.Views.Credential
             new ParametredAsyncRelayCommand(async obj =>
             {
                 var data = (CredentialOverviewEntryViewData)obj;
-                await _displayService.DisplayAsync<CredentialDetailsViewModel>(_context.SelectedSystem.Id, data.CredentialId);
+                await _displayService.DisplayAsync<CredentialDetailsViewModel>(_context.SelectedSystem.Id,
+                    data.CredentialId);
             });
 
         private IViewModelCommand CreateCredential =>

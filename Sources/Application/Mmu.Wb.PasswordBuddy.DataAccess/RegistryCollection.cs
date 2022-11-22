@@ -1,7 +1,8 @@
 ﻿using System.IO.Abstractions;
 using JetBrains.Annotations;
 using Lamar;
-using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelAdapters;
+using Microsoft.Extensions.DependencyInjection;
+using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelAdapters.Base;
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services;
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services.Implementation;
 using Mmu.Wb.PasswordBuddy.DataAccess.DataModeling.DataModelRepositories.Services.Servants;
@@ -19,7 +20,7 @@ namespace Mmu.Wb.PasswordBuddy.DataAccess
                 {
                     scanner.AssemblyContainingType<RegistryCollection>();
                     scanner.AddAllTypesOf(typeof(IDataModelAdapter<,>));
-                    scanner.WithDefaultConventions();
+                    scanner.WithDefaultConventions(ServiceLifetime.Singleton);
                 });
 
             For(typeof(IDataModelRepository<>)).Use(typeof(DataModelRepository<>));

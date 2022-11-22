@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using JetBrains.Annotations;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.Components.CommandBars.ViewData;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Behaviors;
@@ -10,6 +11,7 @@ using Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Overview.ViewData;
 
 namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Overview.Views.CredentialsOverview
 {
+    [PublicAPI]
     public class CredentialsOverviewViewModel : ViewModelBase, IInitializableViewModel, IDisplayableViewModel
     {
         private readonly CommandContainer _commandContainer;
@@ -26,11 +28,11 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Overview.Views.Credential
         public CommandsViewData Commands => _commandContainer.Commands;
         public ICommand DeleteCredential => _commandContainer.DeleteCredential;
         public ICommand EditCredential => _commandContainer.EditCredential;
+        public ObservableCollection<CredentialOverviewEntryViewData> Overview { get; private set; } = null!;
+
+        public Domain.Models.System SelectedSystem { get; private set; } = null!;
 
         public string HeadingDescription => $"Credentials for System {SelectedSystem.Name}";
-        public ObservableCollection<CredentialOverviewEntryViewData> Overview { get; private set; }
-
-        public Domain.Models.System SelectedSystem { get; private set; }
 
         public async Task InitializeAsync(params object[] initParams)
         {
@@ -51,7 +53,8 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Overview.Views.Credential
         private void InitializeOverview()
         {
             var lst = SelectedSystem.Credentials.Values
-                .Select(cred => new CredentialOverviewEntryViewData(cred.Id, cred.UserName, cred.Password, cred.LastChanged))
+                .Select(cred =>
+                    new CredentialOverviewEntryViewData(cred.Id, cred.UserName, cred.Password, cred.LastChanged))
                 .ToList();
 
             Overview = new ObservableCollection<CredentialOverviewEntryViewData>(lst);

@@ -1,8 +1,4 @@
 ﻿<Application x:Class="Mmu.Wb.PasswordBuddy.WpfUI.App"
-			xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-			xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			xmlns:local="clr-namespace:Mmu.Wb.PasswordBuddy.WpfUI">
-	<Application.Resources>
-		<ResourceDictionary Source="/Areas/Common/Dictionaries/GlobalDict.xaml" />
-	</Application.Resources>
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 </Application>

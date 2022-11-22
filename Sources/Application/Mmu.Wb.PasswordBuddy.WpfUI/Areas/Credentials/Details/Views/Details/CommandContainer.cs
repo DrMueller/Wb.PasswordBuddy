@@ -14,7 +14,7 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Details.Views.Details
         private readonly ICredentialDetailsViewService _credentialDetailsService;
         private readonly IInformationPublisher _informationPublisher;
         private readonly INavigationService _navigationService;
-        private CredentialDetailsViewModel _context;
+        private CredentialDetailsViewModel _context = null!;
 
         public CommandContainer(
             IInformationPublisher informationPublisher,
@@ -26,7 +26,7 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Details.Views.Details
             _credentialDetailsService = credentialDetailsService;
         }
 
-        public CommandsViewData Commands { get; private set; }
+        public CommandsViewData Commands { get; private set; } = null!;
 
         private ViewModelCommand Cancel =>
             new(
@@ -41,7 +41,7 @@ namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Credentials.Details.Views.Details
                     _informationPublisher.Publish(
                         InformationEntry.CreateInfo("Credential saved.", false, 5));
                     await NavigateToCredentialsOverviewAsync();
-                }, () => !_context.CredentialData.Data.HasErrors));
+                }, () => !_context.CredentialData.Data.RevalidateAnyErrors()));
 
         public Task InitializeAsync(CredentialDetailsViewModel context)
         {
