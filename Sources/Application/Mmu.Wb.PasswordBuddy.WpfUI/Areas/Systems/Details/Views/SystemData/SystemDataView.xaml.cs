@@ -1,6 +1,4 @@
-﻿using System.Windows.Controls;
-
-namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Systems.Details.Views.SystemData
+﻿namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Systems.Details.Views.SystemData
 {
     /// <summary>
     ///     Interaction logic for SystemDataView.xaml

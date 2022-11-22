@@ -1,5 +1,4 @@
-﻿using System.Windows.Controls;
-using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.Views.Interfaces;
+﻿using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.Views.Interfaces;
 
 namespace Mmu.Wb.PasswordBuddy.WpfUI.Areas.Systems.Overview.Views
 {
